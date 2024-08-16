@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -16,6 +16,6 @@ public class WorkoutDTO {
     private Long id;
     private String name;
     private String note;
-    private List<ExerciseEntity> exercises;
+    private Set<ExerciseEntity> exercises;
 
 }

@@ -1,14 +1,21 @@
 package com.trenbologna.stronk.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Immutable;
+
+import java.util.Set;
 
 @Getter
 @Setter
 @ToString
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "EXERCISE_TABLE")
-public class ExerciseEntity{
+public class ExerciseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
@@ -23,14 +30,8 @@ public class ExerciseEntity{
     @Column(name = "category")
     private String category;
 
-    public ExerciseEntity(){
-
-    }
-    public ExerciseEntity(String name, String bodyPart, String category){
-        this.name = name;
-        this.bodyPart = bodyPart;
-        this.category = category;
-    }
-
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "exercises")
+    @JsonIgnore
+    private Set<WorkoutEntity> workouts;
 }
 

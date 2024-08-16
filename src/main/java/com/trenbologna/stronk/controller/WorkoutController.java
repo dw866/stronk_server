@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * TODO: Will need to include users
@@ -48,6 +49,12 @@ public class WorkoutController {
         WorkoutEntity workoutEntity = workoutMapper.mapFrom(workoutDTO);
         WorkoutEntity savedWorkoutEntity = workoutService.createWorkout(workoutEntity);
         return ResponseEntity.ok(workoutMapper.mapTo(savedWorkoutEntity));
+    }
+
+    @PatchMapping("/{id}")
+    ResponseEntity<WorkoutDTO> patchWorkout(@PathVariable Long id, @RequestBody Map<String, Object> fields){
+        fields.remove("id");
+        return ResponseEntity.ok(workoutMapper.mapTo(workoutService.patchWorkout(id, fields)));
     }
 
 }

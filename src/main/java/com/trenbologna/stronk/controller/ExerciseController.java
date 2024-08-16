@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Map;
 
 /**
  * TODO: Will need to include users
@@ -36,8 +37,6 @@ public class ExerciseController {
     }
     @GetMapping("/{id}")
     ResponseEntity<ExerciseDTO> getExercisesByID(@PathVariable Long id){
-        //ToDo: handle id not found
-
         return ResponseEntity.ok(exerciseMapper.mapTo(exerciseService.getExercise(id)));
     }
     @PostMapping()
@@ -46,14 +45,10 @@ public class ExerciseController {
         ExerciseEntity savedExerciseEntity = exerciseService.createExercise(exerciseEntity);
         return ResponseEntity.ok(exerciseMapper.mapTo(savedExerciseEntity));
     }
-    @PutMapping("/{id}")
-    ExerciseEntity putExercise(@PathVariable Long id, @RequestBody ExerciseEntity model){
-        //ToDO:
-        return model;
-    }
     @PatchMapping("/{id}")
-    ResponseEntity patchExercise(@PathVariable Long id){
-        return ResponseEntity.ok().build();
+    ResponseEntity<ExerciseDTO> patchExercise(@PathVariable Long id, @RequestBody Map<String, Object> fields){
+        fields.remove("id");
+        return ResponseEntity.ok(exerciseMapper.mapTo(exerciseService.patchExercise(id, fields)));
     }
     @DeleteMapping("/{id}")
     ResponseEntity deleteExercise(@PathVariable Long id){
