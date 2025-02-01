@@ -16,7 +16,7 @@ public class GetWorkoutTemplateDtoMapper {
                 .name(workoutTemplate.getName())
                 .note(workoutTemplate.getNote())
                 .exercises(workoutTemplateExercises.stream().map(wte->{
-                    ExerciseEntity exercise = wte.getExercise();
+                    ExerciseEntity exercise = wte.getExerciseTemplate();
                     WorkoutTemplateExerciseEntity.ExerciseTemplateDetail exerciseDetail = wte.getExerciseDetail();
                     return CustomPair.of(
                             wte.getId(),

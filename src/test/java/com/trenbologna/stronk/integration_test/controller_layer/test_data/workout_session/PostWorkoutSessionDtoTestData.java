@@ -1,6 +1,7 @@
 package com.trenbologna.stronk.integration_test.controller_layer.test_data.workout_session;
 
 import com.trenbologna.stronk.domain.exercise.ExerciseEntity;
+import com.trenbologna.stronk.domain.workout_session.dto.GetWorkoutSessionDTO;
 import com.trenbologna.stronk.domain.workout_session.dto.PostWorkoutSessionDTO;
 import com.trenbologna.stronk.domain.workout_template.dto.GetWorkoutTemplateDTO;
 import com.trenbologna.stronk.domain.workout_template.dto.PostWorkoutTemplateDTO;
@@ -26,22 +27,21 @@ public class PostWorkoutSessionDtoTestData {
                         PostWorkoutSessionDTO.ExerciseDTO.builder()
                                 .id(associatedExerciseId)
                                 .sets(sets)
-                                .metric(Enums.WeightUnit.METRIC)
                                 .build()
                 )).build();
     }
-    public static GetWorkoutTemplateDTO getExpected(PostWorkoutTemplateDTO underTest, List<Long> workoutExerciseIds, List<ExerciseEntity> exercises){
-        List<CustomPair<Long, GetWorkoutTemplateDTO.ExerciseDTO>> expectedExercises = new ArrayList<>();
-        for (int i = 0; i < workoutExerciseIds.size(); i++){
-            expectedExercises.add(CustomPair.of(workoutExerciseIds.get(i), getExpectedExercise(underTest.getExercises().get(i), exercises.get(i))));
-        }
-        return GetWorkoutTemplateDTO.builder()
-                .id(underTest.getId())
-                .name(underTest.getName())
-                .note(underTest.getNote())
-                .exercises(expectedExercises)
-                .build();
-    }
+//    public static GetWorkoutSessionDTO getExpected(PostWorkoutSessionDTO underTest, List<Long> workoutExerciseIds, List<ExerciseEntity> exercises){
+//        List<CustomPair<Long, GetWorkoutSessionDTO.ExerciseDTO>> expectedExercises = new ArrayList<>();
+//        for (int i = 0; i < workoutExerciseIds.size(); i++){
+//            expectedExercises.add(CustomPair.of(workoutExerciseIds.get(i), getExpectedExercise(underTest.getExercises().get(i), exercises.get(i))));
+//        }
+//        return GetWorkoutSessionDTO.builder()
+//                .id(underTest.getId())
+//                .name(underTest.getName())
+//                .note(underTest.getNote())
+//                .exercises(expectedExercises)
+//                .build();
+//    }
     private static GetWorkoutTemplateDTO.ExerciseDTO getExpectedExercise(PostWorkoutTemplateDTO.ExerciseDTO exerciseDetail, ExerciseEntity exercise){
         return GetWorkoutTemplateDTO.ExerciseDTO.builder()
                 .id(exercise.getId())

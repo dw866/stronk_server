@@ -7,6 +7,10 @@ import com.trenbologna.stronk.domain.exercise.service.ExerciseService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -26,26 +30,26 @@ public class ExerciseController {
     }
 
     @GetMapping()
-    ResponseEntity<List<GetExerciseDTO>> getExercises(){
-        return ResponseEntity.ok(exerciseService.getAllExercises());
-    }
-    @GetMapping("/{id}")
-    ResponseEntity<GetExerciseDTO> getExercisesByID(@PathVariable Long id){
-        return ResponseEntity.ok(exerciseService.getExercise(id));
+    ResponseEntity<List<GetExerciseDTO>> getExercises(@AuthenticationPrincipal UserDetails userDetails){
+        return ResponseEntity.ok(exerciseService.getAllExercises(userDetails));
     }
     @PostMapping()
-    ResponseEntity postExercise(@Valid @RequestBody PostExerciseDTO postExerciseDTO){
-        exerciseService.createExercise(postExerciseDTO);
+    ResponseEntity postExercise(@AuthenticationPrincipal UserDetails userDetails,
+                                @Valid @RequestBody PostExerciseDTO postExerciseDTO){
+        exerciseService.createExercise(postExerciseDTO, userDetails);
         return ResponseEntity.ok().build();
     }
     @PatchMapping("/{id}")
-    ResponseEntity patchExercise(@PathVariable Long id, @RequestBody PatchExerciseDTO patchExerciseDTO){
-        exerciseService.patchExercise(id, patchExerciseDTO);
+    ResponseEntity patchExercise(@AuthenticationPrincipal UserDetails userDetails,
+                                 @PathVariable Long id,
+                                 @RequestBody PatchExerciseDTO patchExerciseDTO){
+        exerciseService.patchExercise(id, patchExerciseDTO, userDetails);
         return ResponseEntity.ok().build();
     }
     @DeleteMapping("/{id}")
-    ResponseEntity deleteExercise(@PathVariable Long id){
-        exerciseService.deleteExercise(id);
+    ResponseEntity deleteExercise(@AuthenticationPrincipal UserDetails userDetails,
+                                  @PathVariable Long id){
+        exerciseService.deleteExercise(id, userDetails);
         return ResponseEntity.ok().build();
     }
 }

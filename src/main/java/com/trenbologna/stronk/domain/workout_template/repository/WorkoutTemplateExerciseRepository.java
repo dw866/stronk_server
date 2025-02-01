@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface WorkoutTemplateExerciseRepository extends JpaRepository<WorkoutTemplateExerciseEntity, Long> {
     List<WorkoutTemplateExerciseEntity> findAllByIdIn(List<Long> ids);
-    List<WorkoutTemplateExerciseEntity> findByWorkoutId(Long id);
-    List<WorkoutTemplateExerciseEntity> findByExerciseId(Long id);
-    void deleteByWorkout(WorkoutTemplateEntity workoutTemplate);
+    List<WorkoutTemplateExerciseEntity> findByWorkoutTemplateId(Long id);
+    List<WorkoutTemplateExerciseEntity> findByExerciseTemplateId(Long id);
+    void deleteByWorkoutTemplate(WorkoutTemplateEntity workoutTemplate);
 }

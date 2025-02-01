@@ -1,6 +1,7 @@
 package com.trenbologna.stronk.domain.workout_template;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.trenbologna.stronk.domain.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.Accessors;
@@ -27,9 +28,13 @@ public class WorkoutTemplateEntity {
     @Column(name = "note")
     private String note;
 
-    @OneToMany(mappedBy = "workout", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "workoutTemplate", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private Set<WorkoutTemplateExerciseEntity> workoutExercises;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
 
 
 }

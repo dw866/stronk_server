@@ -3,7 +3,7 @@ package com.trenbologna.stronk.unit_test.service_layer;
 import com.trenbologna.stronk.domain.exercise.repository.ExerciseRepository;
 import com.trenbologna.stronk.domain.workout_template.repository.WorkoutTemplateExerciseRepository;
 import com.trenbologna.stronk.domain.workout_template.repository.WorkoutTemplateRepository;
-import com.trenbologna.stronk.domain.workout_template.service.WorkoutTemplateServiceImpl;
+import com.trenbologna.stronk.domain.workout_template.service.WorkoutTemplateService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -19,21 +19,21 @@ import org.mockito.quality.Strictness;
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
 public class WorkoutTemplateServiceTest {
-    @Mock private WorkoutTemplateRepository workoutTemplateRepository;
-    @Mock private ExerciseRepository exerciseRepository;
-    @Mock private WorkoutTemplateExerciseRepository workoutTemplateExerciseRepository;
-
-    @InjectMocks private WorkoutTemplateServiceImpl underTest;
-
-
-    @BeforeEach
-    public void setup(){
-        underTest = new WorkoutTemplateServiceImpl(
-                workoutTemplateRepository,
-                exerciseRepository,
-                workoutTemplateExerciseRepository
-        );
-    }
+//    @Mock private WorkoutTemplateRepository workoutTemplateRepository;
+//    @Mock private ExerciseRepository exerciseRepository;
+//    @Mock private WorkoutTemplateExerciseRepository workoutTemplateExerciseRepository;
+//
+//    @InjectMocks private WorkoutTemplateService underTest;
+//
+//
+//    @BeforeEach
+//    public void setup(){
+//        underTest = new WorkoutTemplateService(
+//                workoutTemplateRepository,
+//                exerciseRepository,
+//                workoutTemplateExerciseRepository
+//        );
+//    }
     @AfterEach
     public void tearDown(){}
 

@@ -15,7 +15,7 @@ import java.util.Objects;
 
 @Getter
 @Setter
-@ToString(exclude = {"workout", "exercise"})
+@ToString(exclude = {"workoutTemplate", "exerciseTemplate"})
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -26,14 +26,14 @@ public class WorkoutTemplateExerciseEntity {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "workout_id")
+    @JoinColumn(name = "workout_template_id")
     @JsonIgnore
-    private WorkoutTemplateEntity workout;
+    private WorkoutTemplateEntity workoutTemplate;
 
     @ManyToOne
-    @JoinColumn(name = "exercise_id")
+    @JoinColumn(name = "exercise_template_id")
     @JsonIgnore
-    private ExerciseEntity exercise;
+    private ExerciseEntity exerciseTemplate;
 
     @Embedded
     private ExerciseTemplateDetail exerciseDetail;
@@ -55,7 +55,7 @@ public class WorkoutTemplateExerciseEntity {
     @Embeddable
     public static class ExerciseTemplateDetail {
         @ElementCollection
-        @CollectionTable(name="exercise_sets", joinColumns=@JoinColumn(name="exercise_id"))
+        @CollectionTable(name="workout_template_sets", joinColumns=@JoinColumn(name="exercise_id"))
         private List<ExerciseSet> sets;
 
         @ElementCollection

@@ -45,7 +45,7 @@ public class WorkoutSessionExerciseEntity {
     @Embeddable
     public static class ExerciseSessionDetail {
         @ElementCollection
-        @CollectionTable(name="exercise_session_sets", joinColumns=@JoinColumn(name="exercise_id"))
+        @CollectionTable(name="workout_session_sets", joinColumns=@JoinColumn(name="exercise_id"))
         private List<WorkoutSessionExerciseEntity.ExerciseSet> sets;
     }
 
