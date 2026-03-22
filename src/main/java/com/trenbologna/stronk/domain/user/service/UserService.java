@@ -6,6 +6,7 @@ import com.trenbologna.stronk.domain.user.dto.UserLoginDTO;
 import com.trenbologna.stronk.domain.user.dto.UserProfileDTO;
 import com.trenbologna.stronk.domain.user.dto.UserRegistrationDTO;
 import com.trenbologna.stronk.domain.user.repository.UserRepository;
+import com.trenbologna.stronk.exceptions.UserAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -38,6 +39,8 @@ public class UserService {
                 .middleName(userDTO.getMiddleName())
                 .password(encoder.encode(userDTO.getPassword()))
                 .build();
+        if (userRepository.existsByEmail(user.getEmail())) throw new UserAlreadyExistsException(String.format("User %s already exists", user.getEmail()));
+
         return userRepository.save(user);
     }
     public String verify(UserLoginDTO userDTO){

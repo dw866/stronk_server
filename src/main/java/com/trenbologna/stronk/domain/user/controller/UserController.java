@@ -4,7 +4,9 @@ import com.trenbologna.stronk.domain.user.dto.UserLoginDTO;
 import com.trenbologna.stronk.domain.user.dto.UserProfileDTO;
 import com.trenbologna.stronk.domain.user.dto.UserRegistrationDTO;
 import com.trenbologna.stronk.domain.user.service.UserService;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -20,19 +22,31 @@ public class UserController {
         this.userService = userService;
     }
     @PostMapping("/register")
-    ResponseEntity<String> register(@Valid @RequestBody UserRegistrationDTO userDTO){
+    ResponseEntity<String> register(@Valid @RequestBody UserRegistrationDTO userDTO, HttpServletResponse response){
         userService.register(userDTO);
         String jwtToken = userService.verify(
                 UserLoginDTO.builder()
                         .email(userDTO.getEmail())
                         .password(userDTO.getPassword())
                 .build());
+
+        Cookie cookie = new Cookie("jwt", jwtToken);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true);
+        cookie.setPath("/");
+        cookie.setMaxAge(86400);
+        response.addCookie(cookie);
         return ResponseEntity.ok(jwtToken);
     }
     @PostMapping("/login")
-    ResponseEntity<String> login(@Valid @RequestBody UserLoginDTO userDTO){
+    ResponseEntity<String> login(@Valid @RequestBody UserLoginDTO userDTO, HttpServletResponse response){
         String jwtToken = userService.verify(userDTO);
-
+        Cookie cookie = new Cookie("jwt", jwtToken);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true);
+        cookie.setPath("/");
+        cookie.setMaxAge(86400);
+        response.addCookie(cookie);
         return ResponseEntity.ok(jwtToken);
     }
     @PostMapping("/logout")
